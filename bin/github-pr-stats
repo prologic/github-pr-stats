@@ -39,6 +39,7 @@ Options:
 
 import signal
 import sys
+from os import getenv
 from collections import defaultdict
 from urlparse import urlsplit
 
@@ -90,7 +91,7 @@ if githubUrl:
 
 # Use a stored OAuth token so we don't have to ask for the user's password
 # every time (or save the password on disk!).
-token = run('git config --global github-pr-stats.%s.token' % githubHost).std_out.strip()
+token = getenv("GITHUB_TOKEN", run('git config --global github-pr-stats.%s.token' % githubHost).std_out.strip())
 if not token:
    from getpass import getpass
    user = password = ''
